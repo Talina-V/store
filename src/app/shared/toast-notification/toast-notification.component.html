@@ -1,0 +1,11 @@
+<div class="position-fixed top-0 start-0 p-3" style="z-index: 5">
+    <div *ngIf="toast" [ngClass]="{'bg-success': toast.type === 'success', 'bg-danger': toast.type === 'danger'}" class="toast show text-white" role="alert" aria-live="assertive" aria-atomic="true" style="min-width: 200px;">
+        <div [ngClass]="{'bg-success': toast.type === 'success', 'bg-danger': toast.type === 'danger'}" class="toast-header text-white">
+            <strong class="me-auto">Notification</strong>
+            <button type="button" class="btn-close btn-close-white" (click)="closeToast()"></button>
+        </div>
+        <div class="toast-body">
+            {{ toast.message }}
+        </div>
+    </div>
+</div>

@@ -1,27 +1,30 @@
-# Stores
+# Бізнес задача
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.0.
+Розробити web аплікацію для менеджменту магазинів клієнта. Аплікація дозволяє побачити список магазинів, скорочену
+інформацію щодо стану їх інвенторію.
 
-## Development server
+Зліва юзер бачить перелік магазинів у вигляді прямокутників. У кожному прямокутнику можна побачити загальну кількість
+товарів, назву магазину, найбільш популярний товар (товар, кількість якого найменша) та його кількість. Список магазинів
+відсортований у порядку від магазину з найбільшої загальною кількістю товарів до магазину з найменшою загальною
+кількістю.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+В правій частині розташована секція, за допомогою якої юзер може додати новий магазин. Для цього йому потрібно вказати
+назву магазину (обов'язкове поле, не менше 3 символів). Також (не обов’язково) є можливість вказати, чи в магазині вже є
+товари, обравши товар та його кількість. За допомогою кнопок “+”, “-” юзер має змогу додати товар до списку, або
+видалити його. Після натискання на кнопку Save, в лівій частині має з’явитися новий магазин. Форму потрібно очистити.
 
-## Code scaffolding
+Додатково (не обов’язково, за власним бажанням):
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- Додати можливість видаляти магазин зі списку
+- Додати візуальне сповіщення (Toast Notification) при вдалій транзакції (додавання магазину, видалення магазину).
 
-## Build
+# Технічні вказівки
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Проект має бути реалізований із застосуванням нижче перелічених технологій:
 
-## Running unit tests
+- Angular 16+
+- Bootstrap 5+
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Первинний список магазинів клієнта знаходиться у `stores.json`, список товарів - у `products.json`. Система при старті
+має завантажити ці списки і в подальшому з ними працювати.
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

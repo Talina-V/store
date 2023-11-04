@@ -1,0 +1,109 @@
+<form [formGroup]="storeForm" class="form">
+    <h2 class="text-lg-end mt-5 mb-3" style="font-size: 24px;">{{ title }}</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <input
+                type="text"
+                class="form-control form-control-lg w-100 "
+                placeholder="Name..."
+                formControlName="storeTitle"
+                [ngClass]="{'has-error': (storeTitle.touched || storeTitle.dirty) && !storeTitle.valid}"
+            >
+            <p class="card-text help-block"
+               *ngIf="(storeTitle?.touched || storeTitle?.dirty) && storeTitle?.errors">
+                <small class="text-danger" *ngIf="storeTitle?.hasError('required')">
+                    Please enter name of your store.
+                </small>
+                <small class="text-danger" *ngIf="storeTitle?.hasError('minlength')">
+                    Need to enter 3 or more symbols.
+                </small>
+                <small class="text-danger" *ngIf="storeTitle?.hasError('maxlength')">
+                    Need to enter 3 to 50 symbols.
+                </small>
+            </p>
+        </div>
+
+        <div class="col-12 mt-3">
+            <div class="form-check">
+                <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="gridCheck"
+                    [checked]="isInventoryAvailable"
+                    (change)="toggleInventoryAvailability()"
+                >
+                <label class="form-check-label" for="gridCheck">
+                    Store has inventory
+                </label>
+            </div>
+        </div>
+
+        <ng-container *ngIf="isInventoryAvailable">
+
+            <div *ngFor="let product of addedProducts"
+                 class="col-10 d-flex justify-content-center align-items-center mt-3">
+                <select class="form-select form-select-lg" aria-label=".form-select-sm пример">
+                    <option
+                        *ngFor="let p of products"
+                        [value]="p.id"
+                        [selected]="p.id === product.id"
+                    >
+                        {{ p.name }}
+                    </option>
+                </select>
+                <input
+                    type="number"
+                    class="form-control form-control-lg mx-2 w-25"
+                    placeholder="0"
+                    value="{{ product.amount }}"
+                >
+                <button
+                    type="submit"
+                    class="btn btn-warning btn-lg text-white"
+                    (click)="removeProduct(product)"
+                >
+                    <fa-icon style="font-size: 20px" [icon]="faMinus"></fa-icon>
+                </button>
+            </div>
+
+            <div class="col-10 d-flex justify-content-center align-items-center mt-3">
+                <select
+                    class="form-select form-select-lg"
+                    aria-label=".form-select-sm"
+                    formControlName="selectedProduct">
+                    <option selected>Select a product</option>
+                    <option
+                        *ngFor="let product of products"
+                        [value]="product.id"
+                    >
+                        {{ product.name }}
+                    </option>
+                </select>
+
+                <input
+                    type="number"
+                    class="form-control form-control-lg mx-2 w-25"
+                    placeholder="0"
+                    formControlName="selectedQuantity"
+                >
+
+                <button type="submit" class="btn btn-primary btn-lg text-white" (click)="addProduct()">
+                    <fa-icon style="font-size: 20px" [icon]="faPlus"></fa-icon>
+                </button>
+            </div>
+
+        </ng-container>
+
+        <div class="col-7 d-grid gap-2 mt-3">
+            <button
+                (click)="onSave(); addStore()"
+                [disabled]="!storeForm.valid || storeTitle.value.length <= 3"
+                type="submit"
+                class="btn btn-lg btn-success mb-5"
+            >
+                Save
+            </button>
+        </div>
+    </div>
+</form>
