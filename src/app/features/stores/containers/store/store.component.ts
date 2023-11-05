@@ -51,17 +51,6 @@ export class StoreComponent implements OnInit {
         });
     }
 
-    addStore() {
-        if (this.storeForm.valid) {
-            const newStore: Store = {
-                name: this.storeForm.value.storeTitle,
-                products: this.addedProducts,
-            };
-
-            this.storeAdded.emit(newStore);
-        }
-    }
-
     addProduct() {
         const selectedProductValue = +this.storeForm.value.selectedProduct;
         const selectedQuantityValue = +this.storeForm.value.selectedQuantity;
@@ -97,23 +86,45 @@ export class StoreComponent implements OnInit {
         return this.storeForm.get('storeTitle')!;
     }
 
+    onSaveAndAddStore(): void {
+        this.onSave();
+        this.addStore();
+    }
+
+    addStore() {
+        const newStore = this.createNewStore();
+        if (newStore) {
+            this.storeAdded.emit(newStore);
+            this.resetFormAndProducts();
+        }
+    }
+
     onSave(): void {
-        const newStoreName: string = this.storeForm.value.storeTitle;
+        const newStore = this.createNewStore();
+        if (newStore) {
+            this.storeAdded.emit(newStore);
 
-        const newStore: Store = {
-            name: newStoreName,
-            products: [],
-        };
-
-        this.stores.push(newStore);
-        this.storeAdded.emit(newStore);
-
-        this.storeForm.get('storeTitle')?.reset();
-
-        this.storeService.getStores().subscribe((stores: Store[]) => {
-            this.storeService.saveStores([...stores, newStore]).subscribe(updatedStores => {
-                console.log('New store added and saved to JSON:', updatedStores);
+            this.storeService.getStores().subscribe((stores: Store[]) => {
+                this.storeService.saveStores([...stores, newStore]).subscribe(updatedStores => {
+                    console.log('New store added and saved to JSON:', updatedStores);
+                });
             });
-        });
+
+            this.resetFormAndProducts();
+        }
+    }
+
+    private createNewStore(): Store | null {
+        if (!this.storeForm.valid) return null;
+
+        return {
+            name: this.storeForm.value.storeTitle,
+            products: this.addedProducts,
+        };
+    }
+
+    private resetFormAndProducts(): void {
+        this.storeForm.reset();
+        this.addedProducts = [];
     }
 }

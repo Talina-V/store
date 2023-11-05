@@ -43,22 +43,6 @@ export class AppComponent implements OnInit {
         return store.products.reduce((acc, product) => acc + product.amount, 0);
     }
 
-    onStoreAdded(newStore: Store): void {
-        this.stores.push(newStore);
-        this.showToast('Store added successfully.', 'success');
-    }
-
-    showToast(message: string, type: 'success' | 'danger') {
-        this.toast = {message, type};
-        timer(3000).pipe(take(1)).subscribe(() => {
-            this.closeToast();
-        });
-    }
-
-    closeToast() {
-        this.toast = null;
-    }
-
     getMostPopularProduct(store: Store): string {
         let maxAmount = 0;
         let popularProductName = 'Out of stock';
@@ -98,5 +82,22 @@ export class AppComponent implements OnInit {
             this.stores.splice(index, 1);
             this.showToast('Store deleted successfully.', 'danger');
         }
+    }
+
+
+    onStoreAdded(newStore: Store): void {
+        this.stores.push(newStore);
+        this.showToast('Store added successfully.', 'success');
+    }
+
+    showToast(message: string, type: 'success' | 'danger') {
+        this.toast = {message, type};
+        timer(3000).pipe(take(1)).subscribe(() => {
+            this.closeToast();
+        });
+    }
+
+    closeToast() {
+        this.toast = null;
     }
 }

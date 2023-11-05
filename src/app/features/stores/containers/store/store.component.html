@@ -97,7 +97,7 @@
 
         <div class="col-7 d-grid gap-2 mt-3">
             <button
-                (click)="onSave(); addStore()"
+                (click)="onSaveAndAddStore()"
                 [disabled]="!storeForm.valid || storeTitle.value.length <= 3"
                 type="submit"
                 class="btn btn-lg btn-success mb-5"
